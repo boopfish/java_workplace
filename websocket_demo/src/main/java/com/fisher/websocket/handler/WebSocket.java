@@ -7,6 +7,7 @@ package com.fisher.websocket.handler;
  */
 
 import com.alibaba.fastjson.JSONObject;
+import com.fisher.websocket.config.WebSocketConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +20,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 @Slf4j
 @Component
-@ServerEndpoint(value = "/ws/{userId}")
+@ServerEndpoint(value = "/ws/{userId}", configurator = WebSocketConfig.class)
 public class WebSocket {
 	private Session session;
 	//存储所有的session
@@ -27,8 +28,18 @@ public class WebSocket {
 	//存储所有在线人数
 	public static CopyOnWriteArrayList<WebSocket> webSockets = new CopyOnWriteArrayList<>();
 
+	/**
+	 * 这里可以通过EndpointConfig 获取到连接时携带的session 判断用户的合法性
+	 * 如果用户验证失败 可以使用session.close()来断开连接
+	 *
+	 * @param session
+	 * @param userId
+	 * @param config
+	 * @throws IOException
+	 */
 	@OnOpen
-	public void onOpen(Session session, @PathParam("userId") String userId) throws IOException {
+	public void onOpen(Session session, @PathParam("userId") String userId, EndpointConfig config) throws IOException {
+		log.info("取得用户id为:{}", config.getUserProperties().get("userId"));
 		this.session = session;
 		sessionPool.put(userId, session);
 		webSockets.add(this);
@@ -50,9 +61,5 @@ public class WebSocket {
 		log.info("用户:{},d断开连接,当前在线人数:{}", userId, webSockets.size());
 
 	}
-//    @OnError
-//    public void oneError() {
-//
-//    }
 
 }
