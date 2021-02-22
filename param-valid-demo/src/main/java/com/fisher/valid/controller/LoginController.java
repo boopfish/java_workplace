@@ -1,12 +1,11 @@
-package com.fisher.valid.Controller;
+package com.fisher.valid.controller;
 
 import com.fisher.valid.vo.UserVO;
+import org.apache.catalina.User;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 /**
  * @Description https://www.cnblogs.com/mr-yang-localhost/p/7812038.html#_label3
@@ -28,14 +27,16 @@ public class LoginController {
 	}
 
 	/**
+	 * https://www.cnblogs.com/panchanggui/p/11758242.html
 	 * 进入不了异常拦截器？
 	 * 发现问题:参数只能添加到请求体里面进行校验才能进入异常拦截器
 	 * 如果在地址栏上进行拼接  虽然能进行参数校验 但是进入不了异常拦截器
+	 * 解决 ：校验失败时会报错BindException 对BindException拦截就行了 BindException是MethodArgumentNotValidException的父类
 	 * @param userVO
 	 * @return
 	 */
 	@GetMapping("/login")
-	public String login(@RequestParam(required = true) UserVO userVO) {
+	public String login(@Validated(UserVO.Login.class) UserVO userVO) {
 		return "登录成功";
 	}
 

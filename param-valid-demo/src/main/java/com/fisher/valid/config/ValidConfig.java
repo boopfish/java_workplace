@@ -23,6 +23,10 @@ public class ValidConfig {
 		return postProcessor;
 	}
 
+	/**
+	 * 该配置设置验证失败快速返回 有一处校验失败就立马返回，只会显示一处错误
+	 * @return
+	 */
 	@Bean
 	public Validator validator() {
 		ValidatorFactory validatorFactory = Validation.byProvider(HibernateValidator.class)
@@ -30,6 +34,8 @@ public class ValidConfig {
 				.addProperty("hibernate.validator.fail_fast", "true")
 				.buildValidatorFactory();
 		Validator validator = validatorFactory.getValidator();
+
+
 
 		return validator;
 	}
