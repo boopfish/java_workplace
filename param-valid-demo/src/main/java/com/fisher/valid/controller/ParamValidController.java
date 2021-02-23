@@ -5,16 +5,18 @@ import org.apache.catalina.User;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
 /**
  * @Description https://www.cnblogs.com/mr-yang-localhost/p/7812038.html#_label3
+ * https://docs.jboss.org/hibernate/validator/4.2/reference/zh-CN/html_single/#validator-gettingstarted
  * @Author fisher
  * @Date 2021-02-22 16:06
  */
 @RestController
 @Validated
-public class LoginController {
+public class ParamValidController {
 
 	/**
 	 * 可以进入异常拦截器
@@ -49,4 +51,5 @@ public class LoginController {
 	public String test( @NotBlank(message = "用户名不合法")String username){
 		return "success";
 	}
+
 }

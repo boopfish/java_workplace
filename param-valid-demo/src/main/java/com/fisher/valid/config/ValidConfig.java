@@ -16,6 +16,11 @@ import javax.validation.ValidatorFactory;
  */
 @Configuration
 public class ValidConfig {
+
+	/**
+	 *
+	 * @return
+	 */
 	@Bean
 	public MethodValidationPostProcessor methodValidationPostProcessor() {
 		MethodValidationPostProcessor postProcessor = new MethodValidationPostProcessor();/**设置validator模式为快速失败返回*/
@@ -34,9 +39,6 @@ public class ValidConfig {
 				.addProperty("hibernate.validator.fail_fast", "true")
 				.buildValidatorFactory();
 		Validator validator = validatorFactory.getValidator();
-
-
-
 		return validator;
 	}
 }

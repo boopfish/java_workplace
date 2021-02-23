@@ -17,7 +17,6 @@ import java.util.Set;
  * @Author fisher
  * @Date 2021-02-22 16:19
  */
-@Order(1)
 @RestControllerAdvice
 public class ParamValidExceptionHandler {
 
