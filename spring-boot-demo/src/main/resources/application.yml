@@ -1,0 +1,7 @@
+library:
+  location: 重庆
+  books:
+    - name: 月亮与六便士
+      description: bababalalala
+    - name: Java入坟
+      description: 就挺简单的把
